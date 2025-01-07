@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const ROOT_DIR = './';
+const IMAGES_DIR = './images';
 const README_FILENAME = 'README.md';
 const NB_IMAGES_PER_LINE = 4;
 const IMAGE_EXTENSIONS = ['.jpg', '.webp', '.jpeg', '.png', '.gif', '.bmp', '.svg'];
@@ -9,14 +9,14 @@ const IMAGE_EXTENSIONS = ['.jpg', '.webp', '.jpeg', '.png', '.gif', '.bmp', '.sv
 let nbImages = 0;
 let mdContent = '<table><tr>';
 
-// Read directory and filter out non-image files and .git folder
-const files = fs.readdirSync(ROOT_DIR)
-  .filter(file => {
-    const isGitFolder = file === '.git';
-    const isReadme = file === README_FILENAME;
-    const isImage = IMAGE_EXTENSIONS.includes(path.extname(file).toLowerCase());
-    return !isGitFolder && !isReadme && isImage;
-  })
+// Create images directory if it doesn't exist
+if (!fs.existsSync(IMAGES_DIR)) {
+  fs.mkdirSync(IMAGES_DIR);
+}
+
+// Read images directory and filter non-image files
+const files = fs.readdirSync(IMAGES_DIR)
+  .filter(file => IMAGE_EXTENSIONS.includes(path.extname(file).toLowerCase()))
   .sort();
 
 files.forEach((image) => {
@@ -29,10 +29,10 @@ files.forEach((image) => {
   nbImages++;
   mdContent += `
 <td valign="bottom">
-<img src="./${image}" width="200"><br>
+<img src="./images/${image}" width="200"><br>
 ${image}
 </td>`;
 });
 
 mdContent += '\n</tr></table>';
-fs.writeFileSync(path.join(ROOT_DIR, README_FILENAME), mdContent);
+fs.writeFileSync(README_FILENAME, mdContent);
