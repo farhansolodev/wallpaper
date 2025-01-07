@@ -4,7 +4,7 @@ const path = require('path');
 const ROOT_DIR = './';
 const README_FILENAME = 'README.md';
 const NB_IMAGES_PER_LINE = 4;
-const IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg'];
+const IMAGE_EXTENSIONS = ['.jpg', '.webp', '.jpeg', '.png', '.gif', '.bmp', '.svg'];
 
 let nbImages = 0;
 let mdContent = '<table><tr>';
